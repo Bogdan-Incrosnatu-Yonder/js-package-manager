@@ -1,0 +1,33 @@
+<p-toolbar class="shell__bar">
+  <ng-template #start>
+    <span class="shell__brand">
+      <i class="pi pi-box"></i>
+      <span>{{ title() }}</span>
+    </span>
+  </ng-template>
+
+  <ng-template #center>
+    <nav class="shell__nav">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="is-active"
+          class="shell__link"
+          [attr.data-testid]="'nav-' + link.label.toLowerCase()"
+        >
+          <i [class]="link.icon"></i>
+          <span>{{ link.label }}</span>
+        </a>
+      }
+    </nav>
+  </ng-template>
+
+  <ng-template #end>
+    <span class="shell__badge" data-testid="built-with">built with {{ builtWith() }}</span>
+  </ng-template>
+</p-toolbar>
+
+<main class="shell__content">
+  <h1 class="shell__heading">Hello, {{ title() }}</h1>
+  <router-outlet />
+</main>

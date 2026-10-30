@@ -1,0 +1,81 @@
+<section class="dashboard">
+  <div class="dashboard__stats">
+    <p-card>
+      <ng-template #title>Fastest cold install</ng-template>
+      <p class="stat">{{ fastest().name }}</p>
+      <p class="stat__sub">{{ fastest().coldInstallSmall | number: '1.1-1' }}s on 50 dependencies</p>
+    </p-card>
+
+    <p-card>
+      <ng-template #title>Smallest on disk</ng-template>
+      <p class="stat">{{ leanest().name }}</p>
+      <p class="stat__sub">{{ leanest().diskMb }} MB for 200 dependencies</p>
+    </p-card>
+
+    <p-card>
+      <ng-template #title>Tools compared</ng-template>
+      <p class="stat">{{ rows().length }}</p>
+      <p class="stat__sub">matching the current filter</p>
+    </p-card>
+  </div>
+
+  <div class="dashboard__filter">
+    <input
+      pInputText
+      type="text"
+      placeholder="Filter by name or strategy…"
+      [ngModel]="query()"
+      (ngModelChange)="query.set($event)"
+      data-testid="filter-input"
+    />
+    <p-button label="Clear" severity="secondary" [outlined]="true" (onClick)="clear()" />
+  </div>
+
+  <p-table [value]="rows()" [tableStyle]="{ 'min-width': '52rem' }" dataKey="id">
+    <ng-template #header>
+      <tr>
+        <th scope="col">Package manager</th>
+        <th scope="col">Lockfile</th>
+        <th scope="col">Install strategy</th>
+        <th scope="col" class="num">Cold install</th>
+        <th scope="col" class="num">vs npm</th>
+        <th scope="col" class="num">Disk</th>
+        <th scope="col" class="num">Compatibility</th>
+        <th scope="col">Audit</th>
+        <th scope="col">Maturity</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-pm>
+      <tr [attr.data-testid]="'row-' + pm.id">
+        <td class="name">{{ pm.name }}</td>
+        <td><code>{{ pm.lockfile }}</code></td>
+        <td>{{ pm.strategy }}</td>
+        <td class="num">{{ pm.coldInstallSmall | number: '1.1-1' }}s</td>
+        <td class="num">{{ speedup(pm) | number: '1.1-1' }}×</td>
+        <td class="num">
+          {{ pm.diskMb }} MB
+          <span class="delta" [class.delta--bad]="diskSaving(pm) < 0">
+            {{ diskSaving(pm) > 0 ? '−' : '+' }}{{ diskSaving(pm) < 0 ? -diskSaving(pm) : diskSaving(pm) }}%
+          </span>
+        </td>
+        <td class="num">{{ pm.compatibility }}%</td>
+        <td>
+          <p-tag
+            [value]="pm.hasBuiltInAudit ? 'Built in' : 'None'"
+            [severity]="pm.hasBuiltInAudit ? 'success' : 'danger'"
+          />
+        </td>
+        <td>
+          <p-tag [value]="pm.maturity" [severity]="severityFor(pm.maturity)" />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="9" class="empty">No package manager matches that filter.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>

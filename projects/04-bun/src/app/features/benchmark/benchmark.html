@@ -1,0 +1,24 @@
+<section class="benchmark">
+  <p-selectbutton
+    [options]="options"
+    [ngModel]="metric()"
+    (ngModelChange)="setMetric($event)"
+    optionLabel="label"
+    optionValue="value"
+    [allowEmpty]="false"
+    data-testid="metric-toggle"
+  />
+
+  <p-card>
+    <ng-template #title>{{ caption() }}</ng-template>
+    <div class="benchmark__chart">
+      <p-chart type="bar" [data]="chartData()" [options]="chartOptions" height="320px" />
+    </div>
+  </p-card>
+
+  <p class="benchmark__note">
+    Figures are the published 2026 benchmark results, kept as static data so the app installs
+    identically under every package manager. Deno's install timings are extrapolated from its own
+    reported figures rather than measured on the same rig.
+  </p>
+</section>

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+
+  "//": [
+    "Deno reads the neighbouring package.json for dependencies. This file adds",
+    "the Deno-specific bits: how node_modules is materialized, and the task",
+    "aliases that stand in for npm scripts.",
+    "",
+    "Angular's CLI, Karma and the build pipeline are Node programs, so they run",
+    "through Deno's Node compatibility layer. That is the whole point of this",
+    "project: it is the most experimental of the five."
+  ],
+
+  "nodeModulesDir": "auto",
+
+  "tasks": {
+    "install": "deno install",
+    "start": "deno run -A npm:@angular/cli@21 serve",
+    "build": "deno run -A npm:@angular/cli@21 build",
+    "build:dev": "deno run -A npm:@angular/cli@21 build --configuration development",
+    "watch": "deno run -A npm:@angular/cli@21 build --watch --configuration development",
+    "test": "deno run -A npm:@angular/cli@21 test",
+    "test:ci": "deno run -A npm:@angular/cli@21 test --configuration ci",
+    "ng": "deno run -A npm:@angular/cli@21"
+  },
+
+  "fmt": {
+    "exclude": ["node_modules", "dist", "coverage", ".angular"]
+  },
+
+  "lint": {
+    "exclude": ["node_modules", "dist", "coverage", ".angular"]
+  }
+}

@@ -1,0 +1,65 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+  }
+
+  &__filter {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+
+    input {
+      flex: 1 1 auto;
+      max-width: 26rem;
+    }
+  }
+}
+
+.stat {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+
+  &__sub {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+}
+
+.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.delta {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  opacity: 0.75;
+
+  &--bad {
+    color: var(--p-red-500, #e24c4c);
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem 0;
+  opacity: 0.7;
+}
+
+code {
+  font-size: 0.85em;
+}

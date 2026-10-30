@@ -1,0 +1,13 @@
+# Bun configuration.
+# Docs: https://bun.sh/docs/runtime/bunfig
+
+[install]
+# Bun keeps a global cache and hard-links from it where the filesystem allows.
+exact = false
+auto = "auto"
+
+# Bun blocks lifecycle scripts unless the package is in "trustedDependencies"
+# in package.json. Run `bun pm untrusted` to see what is currently blocked.
+
+[install.cache]
+disable = false
